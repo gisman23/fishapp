@@ -50,7 +50,7 @@ export class DataBaseService {
             if (docSnap.exists()) {
                 const data = docSnap.data();
                 data['BodyOfWater'].forEach((doc: BodyOfWater) => {
-                    //     console.log("X", doc)
+    //                    console.log("X", doc)
                     this.waters.update(values => [...values, doc]);
                 })
             }
@@ -60,7 +60,7 @@ export class DataBaseService {
     async getFishEvents() {
         await getDocs(collection(this.db, "FishEvents")).then(querySnapshot => {
             querySnapshot.docs.forEach(doc => {
-                //             console.log("X", doc.data())
+    //                         console.log("X", doc.data())
                 this.catches.update(values => [...values, doc.data()]);
             });
         })
