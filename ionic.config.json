@@ -1,0 +1,7 @@
+{
+  "name": "fishapp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
