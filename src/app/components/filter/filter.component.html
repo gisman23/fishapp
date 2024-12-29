@@ -8,32 +8,25 @@
     <ion-title>Fishing Event Filters</ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content padding>
-  <ion-accordion-group>
-    <ion-accordion value="Fishermen">
-      <ion-item slot="header" color="light">
-        <ion-label>Fishermen</ion-label>
-      </ion-item>
-      <div class="ion-padding" slot="content" scrolly="true" style="max-height:210px">
-        <ion-list>
-          <ion-item *ngFor="let person of fishermen">
-            <ion-checkbox justify="start" label-placement="end">{{person}}</ion-checkbox>
-          </ion-item>
-        </ion-list>
-      </div>
-    </ion-accordion>
+<ion-item slot="header" color="light">
+  <ion-label>Fishermen</ion-label>
+</ion-item>
+<ion-content padding style="overflow:scrolly" style="max-height:160px">
+  <ion-list>
+    <ion-item *ngFor="let person of fishermen">
+      <ion-checkbox justify="start" label-placement="end">{{person}}</ion-checkbox>
+    </ion-item>
+  </ion-list>
+</ion-content>
 
-    <ion-accordion value="Species">
-      <ion-item slot="header" color="light">
-        <ion-label>Species</ion-label>
-      </ion-item>
-      <div class="ion-padding" slot="content" scrolly="true" style="max-height:210px">
-        <ion-list>
-          <ion-item *ngFor="let fish of species">
-            <ion-checkbox justify="start" label-placement="end">{{fish}}</ion-checkbox>
-          </ion-item>
-        </ion-list>
-      </div>
-    </ion-accordion>
-  </ion-accordion-group>
+<ion-item slot="header" color="light">
+  <ion-label>Species</ion-label>
+</ion-item>
+
+<ion-content padding style="overflow:scroly" style="max-height:160px">
+  <ion-list>
+    <ion-item *ngFor="let fish of species">
+      <ion-checkbox justify="start" label-placement="end">{{fish}}</ion-checkbox>
+    </ion-item>
+  </ion-list>
 </ion-content>
