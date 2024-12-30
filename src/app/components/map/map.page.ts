@@ -1,6 +1,6 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonButton, IonHeader, IonIcon, IonModal, IonToolbar, IonTitle, IonContent } from '@ionic/angular/standalone';
+import { IonButton, IonToolbar, IonTitle, IonContent } from '@ionic/angular/standalone';
 import { DataBaseService } from 'src/app/services/Database.service';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { MarkerClusterer } from '@googlemaps/markerclusterer';
@@ -13,7 +13,7 @@ import { FilterComponent } from '../filter/filter.component';
   selector: 'app-map',
   templateUrl: 'map.page.html',
   styleUrls: ['map.page.scss'],
-  imports: [ IonButton, IonHeader,   IonToolbar, IonTitle, IonContent, GoogleMapsModule, CommonModule],
+  imports: [ IonButton, IonToolbar, IonTitle, IonContent, GoogleMapsModule, CommonModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 
