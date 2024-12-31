@@ -19,7 +19,7 @@ import { ModalController } from '@ionic/angular/standalone';
 })
 export class FilterComponent {
   dataService = inject(DataBaseService)
-  viewCtrl = inject(ModalController)
+ // viewCtrl = inject(ModalController)
 
   species: any
   fishermen: any
@@ -41,6 +41,6 @@ export class FilterComponent {
   }
 
   dismiss() {
-    this.viewCtrl.dismiss();
+  //  this.viewCtrl.dismiss();
   }
 }

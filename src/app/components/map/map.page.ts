@@ -20,7 +20,7 @@ import { FilterComponent } from '../filter/filter.component';
 export class MapPage implements OnInit {
 
   dataService = inject(DataBaseService)
-  modalCtrl = inject(ModalController)
+ // modalCtrl = inject(ModalController)
 
 
 name:any
@@ -132,10 +132,10 @@ name:any
   }
 
   async presentFilterModal() {
-      const modal = await this.modalCtrl.create({
+   /*   const modal = await this.modalCtrl.create({
         component: FilterComponent,
       });
-      modal.present();
+      modal.present(); */
   }
 
   async getSpecies(){
