@@ -10,7 +10,7 @@ import { options, camera, copy, globe } from 'ionicons/icons';
   imports: [IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel],
 })
 export class TabsPage {
-  public environmentInjector = inject(EnvironmentInjector);
+ // public environmentInjector = inject(EnvironmentInjector);
 
   constructor() {
     addIcons({ options, camera, copy, globe});
