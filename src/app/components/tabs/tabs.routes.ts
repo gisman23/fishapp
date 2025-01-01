@@ -16,11 +16,11 @@ export const routes: Routes = [
         loadComponent: () =>
           import('../logs/logs.page').then((m) => m.LogsPage),
       },
-      {
+   /*   {
         path: 'map',
         loadComponent: () =>
           import('../map/map.page').then((m) => m.MapPage),
-      },
+      },*/
       {
         path: '',
         redirectTo: '/tabs/camera',
