@@ -11,7 +11,7 @@ import { BodyOfWater } from '../models/bodyOfWater.model';
     providedIn: 'root',
 })
 export class DataBaseService {
-  /*  firestore = inject(Firestore);
+    firestore = inject(Firestore);
     firebaseConfig = FirebaseConfig;
     catches = signal<CatchInfo[]>([])
     waters = signal<BodyOfWater[]>([])
@@ -64,7 +64,7 @@ export class DataBaseService {
                 this.catches.update(values => [...values, doc.data()]);
             });
         })
-    };*/
+    };
 }
 
 

@@ -18,12 +18,10 @@ import { FilterComponent } from '../filter/filter.component';
 })
 
 export class MapPage implements OnInit {
+  dataService = inject(DataBaseService)
+  modalCtrl = inject(ModalController)
 
- // dataService = inject(DataBaseService)
- // modalCtrl = inject(ModalController)
-
-
-name:any
+  name:any
 
   species: any
   fishermen:any
@@ -45,10 +43,10 @@ name:any
   }
 
   async onMapInitialized() {
-  //  await this.dataService.getFishermen()
+    await this.dataService.getFishermen()
   //  console.log(this.dataService.fishermen())
-   // await this.dataService.getFishEvents()
-  //  this.DisplayCatches(this.dataService.catches())
+    await this.dataService.getFishEvents()
+    this.DisplayCatches(this.dataService.catches())
     // Do your actions here, e.g., add markers, overlays, etc.
   }
 
@@ -132,20 +130,20 @@ name:any
   }
 
   async presentFilterModal() {
-   /*   const modal = await this.modalCtrl.create({
+      const modal = await this.modalCtrl.create({
         component: FilterComponent,
       });
-      modal.present(); */
+      modal.present(); 
   }
 
   async getSpecies(){
-  //  await this.dataService.getSpecies()
-  //  this.species = this.dataService.species().sort()
+    await this.dataService.getSpecies()
+    this.species = this.dataService.species().sort()
   }
 
   async getFishermen(){
- //   await this.dataService.getFishermen()
- //   this.fishermen = this.dataService.fishermen().sort()
+    await this.dataService.getFishermen()
+    this.fishermen = this.dataService.fishermen().sort()
   }
 }
 
