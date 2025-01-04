@@ -7,7 +7,8 @@ import { MarkerClusterer } from '@googlemaps/markerclusterer';
 import { CatchInfo } from 'src/app/models/catchInfo.model';
 import { ModalController } from '@ionic/angular/standalone';
 import { FilterComponent } from '../filter/filter.component';
-
+import { addIcons } from 'ionicons';
+import { options } from 'ionicons/icons';
 
 @Component({
   selector: 'app-map',
@@ -34,6 +35,7 @@ export class MapPage implements OnInit {
 
 
   constructor() {
+    addIcons({ options});
     this.getSpecies()
     this.getFishermen()
   }
