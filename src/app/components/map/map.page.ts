@@ -14,7 +14,7 @@ import { options } from 'ionicons/icons';
   selector: 'app-map',
   templateUrl: 'map.page.html',
   styleUrls: ['map.page.scss'],
-  imports: [ IonToolbar, IonTitle, IonContent, GoogleMapsModule, CommonModule],
+  imports: [ IonButtonIonToolbar, IonTitle, IonContent, GoogleMapsModule, CommonModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 
