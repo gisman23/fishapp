@@ -6,6 +6,8 @@ import {
 } from '@ionic/angular/standalone';
 import { DataBaseService } from 'src/app/services/Database.service';
 import { ModalController } from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import { options } from 'ionicons/icons';
 
 
 @Component({
@@ -26,6 +28,7 @@ export class FilterComponent {
 
 
   constructor() {
+    addIcons({ options});
     this.getSpecies()
     this.getFishermen()
   }
