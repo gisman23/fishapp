@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="secondary">
+      <ion-button ion-fab mini (click)="dismiss()">
+        <ion-icon slot="icon-only" name="options"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Fishing Event Filters</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-item slot="header" color="light">
+  <ion-label>Fishermen</ion-label>
+</ion-item>
+<ion-content padding style="overflow:scrolly" style="max-height:160px">
+  <ion-list>
+    <ion-item *ngFor="let person of fishermen">
+      <ion-checkbox justify="start" label-placement="end">{{person}}</ion-checkbox>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+<ion-item slot="header" color="light">
+  <ion-label>Species</ion-label>
+</ion-item>
+
+<ion-content padding style="overflow:scroly" style="max-height:160px">
+  <ion-list>
+    <ion-item *ngFor="let fish of species">
+      <ion-checkbox justify="start" label-placement="end">{{fish}}</ion-checkbox>
+    </ion-item>
+  </ion-list>
+</ion-content>
