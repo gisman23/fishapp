@@ -60,7 +60,7 @@ export class DataBaseService {
     async getFishEvents() {
         await getDocs(collection(this.db, "FishEvents")).then(querySnapshot => {
             querySnapshot.docs.forEach(doc => {
-    //                         console.log("X", doc.data())
+         //                    console.log("X", doc.data())
                 this.catches.update(values => [...values, doc.data()]);
             });
         })

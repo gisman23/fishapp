@@ -2,7 +2,12 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   {
+    path: 'map',
+    loadComponent: () => import('./components/map/map.page').then((m) => m.MapPage),
+  },
+  {
     path: '',
-    loadChildren: () => import('./components/tabs/tabs.routes').then((m) => m.routes),
+    redirectTo: 'map',
+    pathMatch: 'full',
   },
 ];

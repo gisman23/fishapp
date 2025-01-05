@@ -8,7 +8,9 @@ import { CatchInfo } from 'src/app/models/catchInfo.model';
 import { ModalController } from '@ionic/angular/standalone';
 import { FilterComponent } from '../filter/filter.component';
 import { addIcons } from 'ionicons';
-import { options } from 'ionicons/icons';
+import { options, removeOutline } from 'ionicons/icons';
+import { LogsPage } from '../logs/logs.page';
+
 
 @Component({
   selector: 'app-map',
@@ -19,9 +21,10 @@ import { options } from 'ionicons/icons';
 })
 
 export class MapPage implements OnInit {
+
   dataService = inject(DataBaseService)
   modalCtrl = inject(ModalController)
-
+  catches: CatchInfo[]
   name:any
 
   species: any
@@ -35,7 +38,9 @@ export class MapPage implements OnInit {
 
 
   constructor() {
-    addIcons({ options});
+    addIcons({ options, removeOutline});
+    
+    console.log(this.catches)
     this.getSpecies()
     this.getFishermen()
   }
@@ -45,9 +50,11 @@ export class MapPage implements OnInit {
   }
 
   async onMapInitialized() {
+    await this.dataService.getFishEvents()
+    this.catches = this.dataService.catches()
     await this.dataService.getFishermen()
   //  console.log(this.dataService.fishermen())
-    await this.dataService.getFishEvents()
+   // await this.dataService.getFishEvents()
     this.DisplayCatches(this.dataService.catches())
     // Do your actions here, e.g., add markers, overlays, etc.
   }
@@ -136,6 +143,14 @@ export class MapPage implements OnInit {
         component: FilterComponent,
       });
       modal.present(); 
+  }
+  async presentModal() {
+    const modal = await this.modalCtrl.create({
+      component: LogsPage,
+      breakpoints: [0, 0.3, 0.5, 0.8],
+      initialBreakpoint: 0.5
+    });
+    await modal.present();
   }
 
   async getSpecies(){

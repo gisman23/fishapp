@@ -1,14 +1,30 @@
 
   <ion-toolbar color="primary">
     <ion-title>Fishing Catches</ion-title>
-    <!--ion-buttons slot="end"-->
       <ion-button  slot="end" (click)="presentFilterModal()">
         <ion-icon  slot="icon-only" name="options"></ion-icon>
       </ion-button>
-    <!--/ion-buttons-->
   </ion-toolbar>
 
 
-<ion-content>
+<ion-content fixed-slot-placement="before">
+  <ion-fab horizontal="center" vertical="bottom" slot="fixed">
+    <ion-fab-button id="open-modal" expand="block" >
+      <ion-icon name="remove-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-modal #modal style="--width: 100%" [isOpen]="true" trigger="open-modal" [initialBreakpoint]="0.15" [breakpoints]="[ 0.15, 0.5, 0.75]">
+      <ion-content>
+        <ion-list>
+          <ion-item *ngFor="let item of this.catches">
+            <ion-label>
+            {{item?.CatchDate}}
+          </ion-label>
+          </ion-item>
+        </ion-list>
+        </ion-content>
+   </ion-modal>
+
   <div id="map"></div>
 </ion-content>
