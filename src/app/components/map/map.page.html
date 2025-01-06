@@ -7,14 +7,9 @@
   </ion-toolbar>
 
 
-<ion-content fixed-slot-placement="before">
-  <ion-fab horizontal="center" vertical="bottom" slot="fixed">
-    <ion-fab-button id="open-modal" expand="block" >
-      <!--ion-icon name="remove-outline"></ion-icon-->
-    </ion-fab-button>
-  </ion-fab>
+<ion-content id="open-modal">
 
-  <ion-modal #modal style="--width: 100%" [isOpen]="true" trigger="open-modal"
+  <ion-modal #modal style="--width: 100%" [isOpen]="true" trigger="open-modal" [canDismiss]="false"
    [initialBreakpoint]="0.15" [breakpoints]="[ 0.15, 0.5, 0.75]" [backdropBreakpoint]="0.15">
       <ion-content>
         <ion-list>
