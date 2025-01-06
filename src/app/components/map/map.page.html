@@ -10,14 +10,15 @@
 <ion-content fixed-slot-placement="before">
   <ion-fab horizontal="center" vertical="bottom" slot="fixed">
     <ion-fab-button id="open-modal" expand="block" >
-      <ion-icon name="remove-outline"></ion-icon>
+      <!--ion-icon name="remove-outline"></ion-icon-->
     </ion-fab-button>
   </ion-fab>
 
-  <ion-modal #modal style="--width: 100%" [isOpen]="true" trigger="open-modal" [initialBreakpoint]="0.15" [breakpoints]="[ 0.15, 0.5, 0.75]">
+  <ion-modal #modal style="--width: 100%" [isOpen]="true" trigger="open-modal"
+   [initialBreakpoint]="0.15" [breakpoints]="[ 0.15, 0.5, 0.75]" [backdropBreakpoint]="0.15">
       <ion-content>
         <ion-list>
-          <ion-item *ngFor="let item of this.catches">
+          <ion-item *ngFor="let item of this.filteredItems()">
             <ion-label>
             {{item?.CatchDate}}
           </ion-label>

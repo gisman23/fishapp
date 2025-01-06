@@ -1,4 +1,4 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, OnInit, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonButton, IonToolbar, IonTitle, IonContent } from '@ionic/angular/standalone';
 import { DataBaseService } from 'src/app/services/Database.service';
@@ -10,6 +10,8 @@ import { FilterComponent } from '../filter/filter.component';
 import { addIcons } from 'ionicons';
 import { options, removeOutline } from 'ionicons/icons';
 import { LogsPage } from '../logs/logs.page';
+import { BboxFilterPipe } from 'src/app/pipes/bbox-filter.pipe';
+import { BoundingBox } from 'src/app/models/boundingBox';
 
 
 @Component({
@@ -30,6 +32,12 @@ export class MapPage implements OnInit {
   species: any
   fishermen:any
 
+  boundingBox = signal<BoundingBox>({"minLat":0, "maxLat":0, "minLng":0, "maxLng":0});
+  filteredItems = computed(() => {
+    const bboxPipe = new BboxFilterPipe();
+    return bboxPipe.transform(this.dataService.catches(), this.boundingBox());
+  });
+
   message = "testing modal"
   dateStr = '';
   map: any;
@@ -39,8 +47,6 @@ export class MapPage implements OnInit {
 
   constructor() {
     addIcons({ options, removeOutline});
-    
-    console.log(this.catches)
     this.getSpecies()
     this.getFishermen()
   }
@@ -50,8 +56,8 @@ export class MapPage implements OnInit {
   }
 
   async onMapInitialized() {
-    await this.dataService.getFishEvents()
-    this.catches = this.dataService.catches()
+ //   await this.dataService.getFishEvents()
+ //   this.catches = this.dataService.catches()
     await this.dataService.getFishermen()
   //  console.log(this.dataService.fishermen())
    // await this.dataService.getFishEvents()
@@ -60,6 +66,8 @@ export class MapPage implements OnInit {
   }
 
   async createMap() {
+    await this.dataService.getFishEvents()
+    this.catches = this.dataService.catches()
     const { Map } = (await google.maps.importLibrary(
       'maps'
     )) as google.maps.MapsLibrary;
@@ -70,6 +78,15 @@ export class MapPage implements OnInit {
       mapId: 'DEMO_MAP_ID',
     });
     this.map.addListener('MapInitialized', this.onMapInitialized())
+    this.map.addListener('bounds_changed', () => {
+      const bounds = this.map.getBounds()
+      if (bounds) {
+        const northEast = bounds.getNorthEast();
+        const southWest = bounds.getSouthWest();
+        this.boundingBox.set({"minLat": southWest.lat(), "maxLat": northEast.lat(),
+                              "minLng": southWest.lng(), "maxLng": northEast.lng()})
+      }
+    }); 
   }
 
   public async DisplayCatches(catches:CatchInfo[]) {
