@@ -12,6 +12,10 @@
   <ion-modal #modal style="--width: 100%" [isOpen]="true" trigger="open-modal" [canDismiss]="false"
    [initialBreakpoint]="0.15" [breakpoints]="[ 0.15, 0.5, 0.75]" [backdropBreakpoint]="0.15">
       <ion-content>
+        <ion-toolbar >
+          <ion-title>Fishing Events</ion-title>
+            <ion-button  slot="end"  All></ion-button>
+        </ion-toolbar>
         <ion-list>
           <ion-item *ngFor="let item of this.filteredItems()">
             <ion-label>

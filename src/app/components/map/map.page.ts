@@ -100,7 +100,7 @@ export class MapPage implements OnInit {
     this.markers = [];
 
     //   this.featureGroup.clearLayers();
-    catches.forEach((x) => {
+    catches.forEach( (x) => {
       this.dateStr =
         String(x.CatchDate).substring(5, 7) +
         '/' +
@@ -132,8 +132,9 @@ export class MapPage implements OnInit {
         popupContent +=
           '<b> High Tide Offset:  </b>' + String(x.HighTideOffset) + ' mins<br/>';
       }
-      //   popupContent +=
-      //    '<br>' + '<img src=' + x.Picture + ' width="128" height="128"></div>';
+
+     popupContent +=
+          '<br>' + '<img src=' + x.Picture+ ' width="128" height="128"></div>';
 
       const infoWindow = new InfoWindow({
         content: popupContent,

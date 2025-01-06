@@ -5,6 +5,8 @@ import { FirebaseConfig } from '../firebaseConfig';
 import { initializeApp } from "firebase/app";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 import { BodyOfWater } from '../models/bodyOfWater.model';
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
+import { __values } from 'tslib';
 
 
 @Injectable({
@@ -58,12 +60,11 @@ export class DataBaseService {
     }
 
     async getFishEvents() {
-        await getDocs(collection(this.db, "FishEvents")).then(querySnapshot => {
-            querySnapshot.docs.forEach(doc => {
-         //                    console.log("X", doc.data())
+        await getDocs(collection(this.db, "FishEvents")).then(querySnapshot => 
+            querySnapshot.docs.forEach( async doc => {
                 this.catches.update(values => [...values, doc.data()]);
-            });
-        })
+            })
+        )
     };
 }
 
