@@ -6,3 +6,23 @@
 ion-modaly {
   --ion-background-color: #c59dee;
 }
+
+ion-grid {
+  height: 90vh;
+  display: grid;
+  padding: 0;
+
+}
+
+.gmap {
+  height:90vh;
+  padding:0
+}
+
+.mylist {
+  height:82vh;
+  width:220px;
+  overflow-y:scroll;
+  padding:0
+}
+

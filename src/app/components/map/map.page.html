@@ -1,30 +1,36 @@
+<ion-toolbar color="primary">
+  <ion-title>Fishing Catches</ion-title>
+  <ion-button slot="end" (click)="presentFilterModal()">
+    <ion-icon slot="icon-only" name="options"></ion-icon>
+  </ion-button>
+</ion-toolbar>
 
-  <ion-toolbar color="primary">
-    <ion-title>Fishing Catches</ion-title>
-      <ion-button  slot="end" (click)="presentFilterModal()">
-        <ion-icon  slot="icon-only" name="options"></ion-icon>
-      </ion-button>
-  </ion-toolbar>
-
-
-<ion-content id="open-modal">
-
-  <ion-modal #modal style="--width: 100%" [isOpen]="true" trigger="open-modal" [canDismiss]="false"
-   [initialBreakpoint]="0.15" [breakpoints]="[ 0.15, 0.5, 0.75]" [backdropBreakpoint]="0.15">
-      <ion-content>
-        <ion-toolbar >
-          <ion-title>Fishing Events</ion-title>
-            <ion-button  slot="end"  All></ion-button>
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col class="gmap">
+        <div id="map"></div>
+      </ion-col>
+      <ion-col size="auto">
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button color="primary"  size="small" fill="solid" shape="round"> All </ion-button>
+          </ion-buttons>
+          <ion-buttons slot="end">
+            <ion-button color="primary" size="small" fill="solid" shape="round"> Map </ion-button>
+          </ion-buttons>
         </ion-toolbar>
-        <ion-list>
-          <ion-item *ngFor="let item of this.filteredItems()">
+        <ion-list class="mylist">
+          <ion-item  *ngFor="let item of this.catches">
             <ion-label>
-            {{item?.CatchDate}}
-          </ion-label>
+              {{item?.CatchDate}}
+            </ion-label>
           </ion-item>
         </ion-list>
-        </ion-content>
-   </ion-modal>
-
-  <div id="map"></div>
+        <!--ion-infinite-scroll>
+          <ion-infinite-scroll-content loadingText="Please wait..." loadingSpinner="bubbles"></ion-infinite-scroll-content>
+        </ion-infinite-scroll-->
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
