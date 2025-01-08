@@ -1,6 +1,6 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, OnInit, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonSplitPane, IonButton, IonToolbar, IonTitle, IonContent} from '@ionic/angular/standalone';
+import { IonSplitPane,  IonToolbar, IonTitle} from '@ionic/angular/standalone';
 import { DataBaseService } from 'src/app/services/Database.service';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { MarkerClusterer } from '@googlemaps/markerclusterer';
@@ -18,7 +18,7 @@ import { BoundingBox } from 'src/app/models/boundingBox';
   selector: 'app-map',
   templateUrl: 'map.page.html',
   styleUrls: ['map.page.scss'],
-  imports: [ IonButton, IonToolbar, IonTitle,  GoogleMapsModule, CommonModule,  IonSplitPane],
+  imports: [ IonToolbar, IonTitle,  GoogleMapsModule, CommonModule,  IonSplitPane],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 
