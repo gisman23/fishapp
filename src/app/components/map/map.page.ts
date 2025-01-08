@@ -1,10 +1,10 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, OnInit, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { InfiniteScrollCustomEvent, IonButton, IonToolbar, IonTitle, IonContent, IonInfiniteScroll, IonInfiniteScrollContent } from '@ionic/angular/standalone';
+import { IonSplitPane, IonButton, IonToolbar, IonTitle, IonContent} from '@ionic/angular/standalone';
 import { DataBaseService } from 'src/app/services/Database.service';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { MarkerClusterer } from '@googlemaps/markerclusterer';
-import { CatchInfo } from 'src/app/models/catchInfo.model';
+import { CatchInfo } from 'src/app/models/catchInfo.model'
 import { ModalController } from '@ionic/angular/standalone';
 import { FilterComponent } from '../filter/filter.component';
 import { addIcons } from 'ionicons';
@@ -18,7 +18,7 @@ import { BoundingBox } from 'src/app/models/boundingBox';
   selector: 'app-map',
   templateUrl: 'map.page.html',
   styleUrls: ['map.page.scss'],
-  imports: [ IonButton, IonToolbar, IonTitle, IonContent, GoogleMapsModule, CommonModule,  IonInfiniteScroll, IonInfiniteScrollContent],
+  imports: [ IonButton, IonToolbar, IonTitle,  GoogleMapsModule, CommonModule,  IonSplitPane],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 

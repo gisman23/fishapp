@@ -7,26 +7,18 @@ ion-modaly {
   --ion-background-color: #c59dee;
 }
 
-ion-gridb {
-  height: 90vh;
-  display: grid;
-  padding: 0;
-
-}
-
 .gmap {
   height:90vh;
   padding:0
 }
 
-.mylist {
+ion-menun {
   height:82vh;
-
+  width:125;
   overflow-y:scroll;
   padding:0
 }
 
-ion-row {
-  flex-wrap:nowrap
+ion-split-pane {
+  --side-width:25px;
 }
-

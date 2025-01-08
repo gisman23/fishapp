@@ -5,19 +5,51 @@
   </ion-button>
 </ion-toolbar>
 
-<ion-content>
-  <ion-grid>
-    <ion-row >
-      <ion-col class="gmap">
-        <ion-button color="primary"  size="small" fill="solid" shape="round"> Map </ion-button>
- 
-        <!--div id="map"></div-->
-      </ion-col>
-      <ion-col size="auto">
-        <!--ion-toolbar>
-          <ion-buttons slot="start"-->
-            <ion-button color="primary"  size="small" fill="solid" shape="round"> All </ion-button>
-          <!--/ion-buttons>
+<ion-split-pane when="xs" contentId="main" >
+  <ion-menu contentId="main">
+    <ion-header>
+      <ion-toolbar color="tertiary">
+        <ion-title>Log</ion-title>
+      </ion-toolbar>
+    </ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button color="primary" size="small" fill="solid" shape="round"> All </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+          <ion-button color="primary" size="small" fill="solid" shape="round"> Map </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+      <ion-list class="mylist">
+        <ion-item *ngFor="let item of this.catches">
+          <ion-label>
+            {{item?.CatchDate}}
+          </ion-label>
+        </ion-item>
+      </ion-list>
+  </ion-menu>
+  <div class="ion-page" id="main">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Main View</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding"> 
+      <div class="gmap" id="map"></div>
+    </ion-content>
+  </div>
+  <!--ion-content>
+    <ion-grid>
+      <ion-row>
+        <ion-col class="gmap">
+          <ion-button color="primary" size="small" fill="solid" shape="round"> Map </ion-button-->
+            <!--div class="ion-page" id="map"></div-->
+        <!--/ion-col>
+        <ion-col size="auto">
+          <ion-toolbar>
+          <ion-buttons slot="start">
+          <ion-button color="primary" size="small" fill="solid" shape="round"> All </ion-button>
+          </ion-buttons>
           <ion-buttons slot="end">
             <ion-button color="primary" size="small" fill="solid" shape="round"> Map </ion-button>
           </ion-buttons>
@@ -32,7 +64,5 @@
         <ion-infinite-scroll>
           <ion-infinite-scroll-content loadingText="Please wait..." loadingSpinner="bubbles"></ion-infinite-scroll-content>
         </ion-infinite-scroll-->
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-</ion-content>
+  </ion-split-pane>
+  
