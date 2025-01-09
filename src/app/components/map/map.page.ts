@@ -1,10 +1,10 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, OnInit, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonSplitPane,  IonToolbar, IonTitle} from '@ionic/angular/standalone';
+import { IonButton, IonToolbar, IonTitle, IonContent } from '@ionic/angular/standalone';
 import { DataBaseService } from 'src/app/services/Database.service';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { MarkerClusterer } from '@googlemaps/markerclusterer';
-import { CatchInfo } from 'src/app/models/catchInfo.model'
+import { CatchInfo } from 'src/app/models/catchInfo.model';
 import { ModalController } from '@ionic/angular/standalone';
 import { FilterComponent } from '../filter/filter.component';
 import { addIcons } from 'ionicons';
@@ -18,7 +18,7 @@ import { BoundingBox } from 'src/app/models/boundingBox';
   selector: 'app-map',
   templateUrl: 'map.page.html',
   styleUrls: ['map.page.scss'],
-  imports: [ IonToolbar, IonTitle,  GoogleMapsModule, CommonModule,  IonSplitPane],
+  imports: [ IonButton, IonToolbar, IonTitle, IonContent, GoogleMapsModule, CommonModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 
@@ -100,7 +100,7 @@ export class MapPage implements OnInit {
     this.markers = [];
 
     //   this.featureGroup.clearLayers();
-    catches.forEach( (x) => {
+    catches.forEach((x) => {
       this.dateStr =
         String(x.CatchDate).substring(5, 7) +
         '/' +
@@ -132,9 +132,8 @@ export class MapPage implements OnInit {
         popupContent +=
           '<b> High Tide Offset:  </b>' + String(x.HighTideOffset) + ' mins<br/>';
       }
-
-     popupContent +=
-          '<br>' + '<img src=' + x.Picture+ ' width="128" height="128"></div>';
+      //   popupContent +=
+      //    '<br>' + '<img src=' + x.Picture + ' width="128" height="128"></div>';
 
       const infoWindow = new InfoWindow({
         content: popupContent,
@@ -181,5 +180,3 @@ export class MapPage implements OnInit {
     this.fishermen = this.dataService.fishermen().sort()
   }
 }
-
-
