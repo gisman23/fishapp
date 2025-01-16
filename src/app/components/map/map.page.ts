@@ -176,8 +176,9 @@ export class MapPage implements OnInit {
     this.fishermen = this.dataService.fishermen().sort()
   }
 
-
-  selectDate(item) {
+  public currentSelected: Number = null;
+  selectDate(index, item) {
+    this.currentSelected = index === this.currentSelected ? null: index;
     item.selected =! item.selected;  
  if (this.previousSelectedItem != null) {
  const prevmarkers = this.markerMap.get(this.previousSelectedItem.CatchDate)
