@@ -16,12 +16,10 @@
 <ion-modal #modal style="--width: 100%" [isOpen]="true" trigger="open-modal"
  [initialBreakpoint]="0.15" [breakpoints]="[ 0.15, 0.5, 0.75]" [backdropBreakpoint]="0.15">
     <ion-content>
-      <ion-list>
-        <ion-item *ngFor="let item of this.filteredItems()">
-          <ion-label>
-          {{item?.CatchDate}}
-        </ion-label>
-        </ion-item>
+      <ion-list >
+          <ion-item *ngFor="let item of this.filteredItems()" [attr.color]="item.selected ? 'primary' : ''" (click)="selectDate(item)" >
+            {{item?.CatchDate}}
+          </ion-item> 
       </ion-list>
       </ion-content>
  </ion-modal>

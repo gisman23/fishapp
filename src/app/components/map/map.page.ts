@@ -12,7 +12,7 @@ import { options, removeOutline } from 'ionicons/icons';
 import { LogsPage } from '../logs/logs.page';
 import { BboxFilterPipe } from 'src/app/pipes/bbox-filter.pipe';
 import { BoundingBox } from 'src/app/models/boundingBox';
-
+import Multimap from 'multimap';
 
 @Component({
   selector: 'app-map',
@@ -26,11 +26,6 @@ export class MapPage implements OnInit {
 
   dataService = inject(DataBaseService)
   modalCtrl = inject(ModalController)
-  catches: CatchInfo[]
-  name:any
-
-  species: any
-  fishermen:any
 
   boundingBox = signal<BoundingBox>({"minLat":0, "maxLat":0, "minLng":0, "maxLng":0});
   filteredItems = computed(() => {
@@ -38,12 +33,17 @@ export class MapPage implements OnInit {
     return bboxPipe.transform(this.dataService.catches(), this.boundingBox());
   });
 
-  message = "testing modal"
-  dateStr = '';
-  map: any;
+  catches: CatchInfo[]
 
+  species: any
+  fishermen:any
+
+  map: any;
   markers: google.maps.marker.AdvancedMarkerElement[] = []
 
+  previousInfoWindow = null;
+  previousSelectedItem = null;
+  markerMap  = new Multimap();
 
   constructor() {
     addIcons({ options, removeOutline});
@@ -56,21 +56,14 @@ export class MapPage implements OnInit {
   }
 
   async onMapInitialized() {
- //   await this.dataService.getFishEvents()
- //   this.catches = this.dataService.catches()
     await this.dataService.getFishermen()
-  //  console.log(this.dataService.fishermen())
-   // await this.dataService.getFishEvents()
     this.DisplayCatches(this.dataService.catches())
-    // Do your actions here, e.g., add markers, overlays, etc.
   }
 
   async createMap() {
     await this.dataService.getFishEvents()
     this.catches = this.dataService.catches()
-    const { Map } = (await google.maps.importLibrary(
-      'maps'
-    )) as google.maps.MapsLibrary;
+    const { Map } = (await google.maps.importLibrary( 'maps')) as google.maps.MapsLibrary;
 
     this.map = new Map(document.getElementById('map'), {
       center: { lat: 39.066, lng: -76.511 },
@@ -90,18 +83,13 @@ export class MapPage implements OnInit {
   }
 
   public async DisplayCatches(catches:CatchInfo[]) {
-    const { InfoWindow } = (await google.maps.importLibrary(
-      'maps'
-    )) as google.maps.MapsLibrary;
-    const { AdvancedMarkerElement } = (await google.maps.importLibrary(
-      'marker'
-    )) as google.maps.MarkerLibrary;
+    const { InfoWindow } = (await google.maps.importLibrary('maps')) as google.maps.MapsLibrary;
+    const { AdvancedMarkerElement } = (await google.maps.importLibrary('marker' )) as google.maps.MarkerLibrary;
 
     this.markers = [];
 
-    //   this.featureGroup.clearLayers();
     catches.forEach((x) => {
-      this.dateStr =
+      const dateStr =
         String(x.CatchDate).substring(5, 7) +
         '/' +
         String(x.CatchDate).substring(8, 10) +
@@ -110,7 +98,7 @@ export class MapPage implements OnInit {
       var popupContent =
         '<div style="color:blue;  id="infoText">' +
         '<b>' +
-        String(this.dateStr) +
+        String(dateStr) +
         '</b> - ' +
         String(x.CatchTime) +
         '<br/> ' +
@@ -140,19 +128,27 @@ export class MapPage implements OnInit {
       });
       const map = this.map;
       const position = new google.maps.LatLng(x.Location[1], x.Location[0]);
+      const pin = new google.maps.marker.PinElement({});
       const marker = new AdvancedMarkerElement({
         map,
         position,
+        content:pin.element
       });
+      this.markerMap.set(x.CatchDate, marker)
 
       marker.addListener('click', () => {
+        if (this.previousInfoWindow != null)
+        {
+          this.previousInfoWindow.close()
+        }
+        this.previousInfoWindow = infoWindow;
         infoWindow.open({ map, anchor: marker });
       });
       this.markers.push(marker);
     });
     const map = this.map;
-    var mkl = this.markers;
-    new MarkerClusterer({ map, markers: mkl });
+    new MarkerClusterer({ map, markers: this.markers });
+    
   }
 
   async presentFilterModal() {
@@ -178,5 +174,26 @@ export class MapPage implements OnInit {
   async getFishermen(){
     await this.dataService.getFishermen()
     this.fishermen = this.dataService.fishermen().sort()
+  }
+
+
+  selectDate(item) {
+    item.selected =! item.selected;  
+ if (this.previousSelectedItem != null) {
+ const prevmarkers = this.markerMap.get(this.previousSelectedItem.CatchDate)
+ prevmarkers.forEach(marker => {
+   const pin = new google.maps.marker.PinElement({
+     background: "red",
+   });
+   marker.content = pin.element
+ });}
+    const markers = this.markerMap.get(item.CatchDate)
+    markers.forEach(marker => {
+      const pin = new google.maps.marker.PinElement({
+        background: "yellow",
+      });
+      marker.content = pin.element
+    });
+    this.previousSelectedItem = item
   }
 }
