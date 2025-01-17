@@ -1,6 +1,6 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, OnInit, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonButton, IonToolbar, IonTitle, IonContent } from '@ionic/angular/standalone';
+import { IonGrid, IonCard, IonButton, IonToolbar, IonTitle, IonContent } from '@ionic/angular/standalone';
 import { DataBaseService } from 'src/app/services/Database.service';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { MarkerClusterer } from '@googlemaps/markerclusterer';
@@ -18,7 +18,7 @@ import Multimap from 'multimap';
   selector: 'app-map',
   templateUrl: 'map.page.html',
   styleUrls: ['map.page.scss'],
-  imports: [ IonButton, IonToolbar, IonTitle, IonContent, GoogleMapsModule, CommonModule],
+  imports: [IonGrid, IonCard, IonButton, IonToolbar, IonTitle, IonContent, GoogleMapsModule, CommonModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 
@@ -27,7 +27,7 @@ export class MapPage implements OnInit {
   dataService = inject(DataBaseService)
   modalCtrl = inject(ModalController)
 
-  boundingBox = signal<BoundingBox>({"minLat":0, "maxLat":0, "minLng":0, "maxLng":0});
+  boundingBox = signal<BoundingBox>({ "minLat": 0, "maxLat": 0, "minLng": 0, "maxLng": 0 });
   filteredItems = computed(() => {
     const bboxPipe = new BboxFilterPipe();
     return bboxPipe.transform(this.dataService.catches(), this.boundingBox());
@@ -36,23 +36,23 @@ export class MapPage implements OnInit {
   catches: CatchInfo[]
 
   species: any
-  fishermen:any
+  fishermen: any
 
   map: any;
   markers: google.maps.marker.AdvancedMarkerElement[] = []
 
   previousInfoWindow = null;
   previousSelectedItem = null;
-  markerMap  = new Multimap();
+  markerMap = new Multimap();
 
   constructor() {
-    addIcons({ options, removeOutline});
+    addIcons({ options, removeOutline });
     this.getSpecies()
     this.getFishermen()
   }
 
   ngOnInit(): void {
-   this.createMap();
+    this.createMap();
   }
 
   async onMapInitialized() {
@@ -63,7 +63,7 @@ export class MapPage implements OnInit {
   async createMap() {
     await this.dataService.getFishEvents()
     this.catches = this.dataService.catches()
-    const { Map } = (await google.maps.importLibrary( 'maps')) as google.maps.MapsLibrary;
+    const { Map } = (await google.maps.importLibrary('maps')) as google.maps.MapsLibrary;
 
     this.map = new Map(document.getElementById('map'), {
       center: { lat: 39.066, lng: -76.511 },
@@ -76,15 +76,17 @@ export class MapPage implements OnInit {
       if (bounds) {
         const northEast = bounds.getNorthEast();
         const southWest = bounds.getSouthWest();
-        this.boundingBox.set({"minLat": southWest.lat(), "maxLat": northEast.lat(),
-                              "minLng": southWest.lng(), "maxLng": northEast.lng()})
+        this.boundingBox.set({
+          "minLat": southWest.lat(), "maxLat": northEast.lat(),
+          "minLng": southWest.lng(), "maxLng": northEast.lng()
+        })
       }
-    }); 
+    });
   }
 
-  public async DisplayCatches(catches:CatchInfo[]) {
+  public async DisplayCatches(catches: CatchInfo[]) {
     const { InfoWindow } = (await google.maps.importLibrary('maps')) as google.maps.MapsLibrary;
-    const { AdvancedMarkerElement } = (await google.maps.importLibrary('marker' )) as google.maps.MarkerLibrary;
+    const { AdvancedMarkerElement } = (await google.maps.importLibrary('marker')) as google.maps.MarkerLibrary;
 
     this.markers = [];
 
@@ -120,8 +122,8 @@ export class MapPage implements OnInit {
         popupContent +=
           '<b> High Tide Offset:  </b>' + String(x.HighTideOffset) + ' mins<br/>';
       }
-         popupContent +=
-          '<br>' + '<img src=' + x.Picture + ' width="128" height="128"></div>';
+      popupContent +=
+        '<br>' + '<img src=' + x.Picture + ' width="128" height="128"></div>';
 
       const infoWindow = new InfoWindow({
         content: popupContent,
@@ -132,13 +134,12 @@ export class MapPage implements OnInit {
       const marker = new AdvancedMarkerElement({
         map,
         position,
-        content:pin.element
+        content: pin.element
       });
       this.markerMap.set(x.CatchDate, marker)
 
       marker.addListener('click', () => {
-        if (this.previousInfoWindow != null)
-        {
+        if (this.previousInfoWindow != null) {
           this.previousInfoWindow.close()
         }
         this.previousInfoWindow = infoWindow;
@@ -148,14 +149,14 @@ export class MapPage implements OnInit {
     });
     const map = this.map;
     new MarkerClusterer({ map, markers: this.markers });
-    
+
   }
 
   async presentFilterModal() {
-      const modal = await this.modalCtrl.create({
-        component: FilterComponent,
-      });
-      modal.present(); 
+    const modal = await this.modalCtrl.create({
+      component: FilterComponent,
+    });
+    modal.present();
   }
   async presentModal() {
     const modal = await this.modalCtrl.create({
@@ -166,28 +167,29 @@ export class MapPage implements OnInit {
     await modal.present();
   }
 
-  async getSpecies(){
+  async getSpecies() {
     await this.dataService.getSpecies()
     this.species = this.dataService.species().sort()
   }
 
-  async getFishermen(){
+  async getFishermen() {
     await this.dataService.getFishermen()
     this.fishermen = this.dataService.fishermen().sort()
   }
 
   public currentSelected: Number = null;
   selectDate(index, item) {
-    this.currentSelected = index === this.currentSelected ? null: index;
-    item.selected =! item.selected;  
- if (this.previousSelectedItem != null) {
- const prevmarkers = this.markerMap.get(this.previousSelectedItem.CatchDate)
- prevmarkers.forEach(marker => {
-   const pin = new google.maps.marker.PinElement({
-     background: "red",
-   });
-   marker.content = pin.element
- });}
+    this.currentSelected = index === this.currentSelected ? null : index;
+    item.selected = !item.selected;
+    if (this.previousSelectedItem != null) {
+      const prevmarkers = this.markerMap.get(this.previousSelectedItem.CatchDate)
+      prevmarkers.forEach(marker => {
+        const pin = new google.maps.marker.PinElement({
+          background: "red",
+        });
+        marker.content = pin.element
+      });
+    }
     const markers = this.markerMap.get(item.CatchDate)
     markers.forEach(marker => {
       const pin = new google.maps.marker.PinElement({
