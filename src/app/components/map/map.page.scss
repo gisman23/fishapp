@@ -7,7 +7,12 @@ ion-modaly {
   --ion-background-color: #c59dee;
 }
 
-ion-row 
-{
-    overflow-y: scroll;
-};
+.page {
+  overflow: scroll;
+}
+/* minimal */
+.page::-webkit-scrollbar {
+    width: .5em; /* counts only for the vertical scrollbar */
+ //   height: .5em; /* counts only for the horizontal scrollbar */
+}
+
