@@ -17,16 +17,20 @@
  [initialBreakpoint]="0.15" [breakpoints]="[ 0.15, 0.25, 0.5,]" [backdropBreakpoint]="0.15">
     <ion-content >
       <ion-grid  >
-        <div class="page">
+        <div style="overflow-y: scroll">     
         <ion-row>
+
           <ion-col *ngFor="let item of this.filteredItems(); index as i"        
           [ngStyle]="{'background':  i === currentSelected ? 'Red' :  null}"  (click)="selectDate(i, item)" >
+
             <ion-card>
               <ion-card-header>
                 <ion-card-title>{{item?.CatchDate}}</ion-card-title>
               </ion-card-header>
             </ion-card>
+
           </ion-col>
+
         </ion-row>
       </div>
       </ion-grid>
