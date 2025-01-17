@@ -3,13 +3,17 @@
     <ion-title>Log</ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content class="ion-padding">
-  <ion-list>
-    <ion-item *ngFor="let item of catches">
-      <ion-label>
-      {{item?.CatchDate}}
-    </ion-label>
-    </ion-item>
-  </ion-list>
-
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col *ngFor="let item of this.filteredItems(); index as i"
+        [ngStyle]="{'background':  i === currentSelected ? 'Red' :  null}">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>{{item?.CatchDate}}</ion-card-title>
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

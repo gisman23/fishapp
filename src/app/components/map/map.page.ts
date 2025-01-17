@@ -1,6 +1,6 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, OnInit, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonGrid, IonCard, IonButton, IonToolbar, IonTitle, IonContent } from '@ionic/angular/standalone';
+import { IonGrid, IonCard, IonCardHeader, IonRow, IonButton, IonToolbar, IonTitle, IonContent } from '@ionic/angular/standalone';
 import { DataBaseService } from 'src/app/services/Database.service';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { MarkerClusterer } from '@googlemaps/markerclusterer';
@@ -18,7 +18,7 @@ import Multimap from 'multimap';
   selector: 'app-map',
   templateUrl: 'map.page.html',
   styleUrls: ['map.page.scss'],
-  imports: [IonGrid, IonCard, IonButton, IonToolbar, IonTitle, IonContent, GoogleMapsModule, CommonModule],
+  imports: [IonCard, IonCardHeader, IonGrid, IonRow, IonButton, IonToolbar, IonTitle, IonContent, GoogleMapsModule, CommonModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 
@@ -29,8 +29,12 @@ export class MapPage implements OnInit {
 
   boundingBox = signal<BoundingBox>({ "minLat": 0, "maxLat": 0, "minLng": 0, "maxLng": 0 });
   filteredItems = computed(() => {
-    const bboxPipe = new BboxFilterPipe();
-    return bboxPipe.transform(this.dataService.catches(), this.boundingBox());
+    /* Unique CatchDate's */
+    return this.dataService.catches().filter((obj, index, self) => {
+      return index === self.findIndex(o => o["CatchDate"] === obj["CatchDate"]);
+    }).sort((a, b) => b.CatchDate.localeCompare(a.CatchDate))
+    //  const bboxPipe = new BboxFilterPipe();
+    //  return bboxPipe.transform(this.dataService.catches(), this.boundingBox());
   });
 
   catches: CatchInfo[]
@@ -161,8 +165,8 @@ export class MapPage implements OnInit {
   async presentModal() {
     const modal = await this.modalCtrl.create({
       component: LogsPage,
-      breakpoints: [0, 0.3, 0.5, 0.8],
-      initialBreakpoint: 0.5
+    //  breakpoints: [0, 0.3, 0.5, 0.8],
+    //  initialBreakpoint: 0.5
     });
     await modal.present();
   }
@@ -190,13 +194,18 @@ export class MapPage implements OnInit {
         marker.content = pin.element
       });
     }
-    const markers = this.markerMap.get(item.CatchDate)
-    markers.forEach(marker => {
+
+    var bounds = new google.maps.LatLngBounds();
+
+    const selectedMarkers = this.markerMap.get(item.CatchDate)
+    selectedMarkers.forEach(marker => {
+      bounds.extend(marker.position) // your marker position, must be a LatLng instance
       const pin = new google.maps.marker.PinElement({
         background: "yellow",
       });
       marker.content = pin.element
     });
+    this.map.fitBounds(bounds); // map should be your map class
     this.previousSelectedItem = item
   }
 }
