@@ -14,11 +14,13 @@ import { BboxFilterPipe } from 'src/app/pipes/bbox-filter.pipe';
 import { BoundingBox } from 'src/app/models/boundingBox';
 import Multimap from 'multimap';
 
+
 @Component({
   selector: 'app-map',
   templateUrl: 'map.page.html',
   styleUrls: ['map.page.scss'],
-  imports: [IonCard, IonCardHeader, IonGrid, IonRow, IonButton, IonToolbar, IonTitle, IonContent, GoogleMapsModule, CommonModule],
+  imports: [IonCard, IonCardHeader, IonGrid, IonRow, IonButton,
+    IonToolbar, IonTitle, IonContent, GoogleMapsModule, CommonModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 
