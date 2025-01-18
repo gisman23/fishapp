@@ -1,6 +1,7 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, OnInit, signal, computed } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, OnInit, signal, computed, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonGrid, IonCard, IonCardHeader, IonRow, IonButton, IonToolbar, IonTitle, IonContent } from '@ionic/angular/standalone';
+import { IonGrid, IonCard, IonCardHeader, IonRow, IonButton, IonToolbar, 
+  IonModal, IonTitle, IonContent } from '@ionic/angular/standalone';
 import { DataBaseService } from 'src/app/services/Database.service';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { MarkerClusterer } from '@googlemaps/markerclusterer';
@@ -19,12 +20,13 @@ import Multimap from 'multimap';
   selector: 'app-map',
   templateUrl: 'map.page.html',
   styleUrls: ['map.page.scss'],
-  imports: [IonCard, IonCardHeader, IonGrid, IonRow, IonButton,
+  imports: [IonCard, IonCardHeader, IonGrid, IonRow, IonButton, 
     IonToolbar, IonTitle, IonContent, GoogleMapsModule, CommonModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 
 export class MapPage implements OnInit {
+  @ViewChild('#log_modal') modal: ElementRef
 
   dataService = inject(DataBaseService)
   modalCtrl = inject(ModalController)
@@ -209,5 +211,13 @@ export class MapPage implements OnInit {
     });
     this.map.fitBounds(bounds); // map should be your map class
     this.previousSelectedItem = item
+    this.moveTo(0.15)
+  }
+  moveTo(breakpoint: number) {
+    const { nativeElement } = this.modal;
+    if (!nativeElement) {
+      return;
+    }
+    nativeElement.setCurrentBreakpoint(breakpoint);
   }
 }
