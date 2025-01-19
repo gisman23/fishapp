@@ -2,7 +2,7 @@ import { Component, inject, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   IonList, IonItem, IonLabel, IonTitle,
-  IonHeader, IonContent
+  IonHeader, IonContent, IonCheckbox
 } from '@ionic/angular/standalone';
 import { DataBaseService } from 'src/app/services/Database.service';
 import { ModalController } from '@ionic/angular/standalone';
@@ -15,7 +15,7 @@ import { options } from 'ionicons/icons';
   templateUrl: 'filter.component.html',
   styleUrls: ['filter.component.css'],
   standalone: true,
-  imports: [IonHeader, IonTitle, IonLabel,
+  imports: [IonHeader, IonTitle, IonLabel, IonCheckbox,
     IonItem, IonList, CommonModule, IonContent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
@@ -45,5 +45,10 @@ export class FilterComponent {
 
   dismiss() {
     this.viewCtrl.dismiss();
+  }
+
+  getValue(event:any)
+  {
+    console.log(event)
   }
 }
