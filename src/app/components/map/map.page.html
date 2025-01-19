@@ -20,7 +20,7 @@
       <ion-grid  >
         <div style="overflow-y: scroll">     
         <ion-row>
-          <ion-col *ngFor="let item of this.filteredItems(); index as i"        
+          <ion-col size="12" size-xs="12" size-sm="6" size-md="4" size-lg="3" *ngFor="let item of this.filteredItems(); index as i"        
           [ngStyle]="{'background':  i === currentSelected ? 'Red' :  null}"  (click)="selectDate(i, item)" >
             <ion-card>
               <ion-card-header>
