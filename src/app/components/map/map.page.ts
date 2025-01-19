@@ -70,6 +70,7 @@ export class MapPage implements OnInit {
 
     this.map = new Map(document.getElementById('map'), {
       center: { lat: 39.066, lng: -76.511 },
+      streetViewControl: false,
       zoom: 12,
       mapId: 'DEMO_MAP_ID',
     });
