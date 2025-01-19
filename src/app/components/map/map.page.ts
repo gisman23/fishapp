@@ -1,7 +1,6 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, OnInit, signal, computed, ViewChild, ElementRef } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, OnInit, signal, computed, ViewChild, ElementRef} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonGrid, IonCard, IonCardHeader, IonRow, IonButton, IonToolbar, 
-  IonModal, IonTitle, IonContent } from '@ionic/angular/standalone';
+import { IonToolbar, IonTitle, IonContent, IonSearchbar } from '@ionic/angular/standalone';
 import { DataBaseService } from 'src/app/services/Database.service';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { MarkerClusterer } from '@googlemaps/markerclusterer';
@@ -10,8 +9,6 @@ import { ModalController } from '@ionic/angular/standalone';
 import { FilterComponent } from '../filter/filter.component';
 import { addIcons } from 'ionicons';
 import { options, removeOutline } from 'ionicons/icons';
-import { LogsPage } from '../logs/logs.page';
-import { BboxFilterPipe } from 'src/app/pipes/bbox-filter.pipe';
 import { BoundingBox } from 'src/app/models/boundingBox';
 import Multimap from 'multimap';
 
@@ -20,14 +17,12 @@ import Multimap from 'multimap';
   selector: 'app-map',
   templateUrl: 'map.page.html',
   styleUrls: ['map.page.scss'],
-  imports: [IonCard, IonCardHeader, IonGrid, IonRow, IonButton, 
-    IonToolbar, IonTitle, IonContent, GoogleMapsModule, CommonModule],
+  imports: [ IonSearchbar, IonToolbar, IonTitle, IonContent, GoogleMapsModule, CommonModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 
 export class MapPage implements OnInit {
-  @ViewChild('#log_modal') modal: ElementRef
-
+  @ViewChild('log_modal') sheetElement!: ElementRef;
   dataService = inject(DataBaseService)
   modalCtrl = inject(ModalController)
 
@@ -37,8 +32,6 @@ export class MapPage implements OnInit {
     return this.dataService.catches().filter((obj, index, self) => {
       return index === self.findIndex(o => o["CatchDate"] === obj["CatchDate"]);
     }).sort((a, b) => b.CatchDate.localeCompare(a.CatchDate))
-    //  const bboxPipe = new BboxFilterPipe();
-    //  return bboxPipe.transform(this.dataService.catches(), this.boundingBox());
   });
 
   catches: CatchInfo[]
@@ -52,6 +45,7 @@ export class MapPage implements OnInit {
   previousInfoWindow = null;
   previousSelectedItem = null;
   markerMap = new Multimap();
+  log_modal: any;
 
   constructor() {
     addIcons({ options, removeOutline });
@@ -166,14 +160,7 @@ export class MapPage implements OnInit {
     });
     modal.present();
   }
-  async presentModal() {
-    const modal = await this.modalCtrl.create({
-      component: LogsPage,
-    //  breakpoints: [0, 0.3, 0.5, 0.8],
-    //  initialBreakpoint: 0.5
-    });
-    await modal.present();
-  }
+
 
   async getSpecies() {
     await this.dataService.getSpecies()
@@ -211,13 +198,11 @@ export class MapPage implements OnInit {
     });
     this.map.fitBounds(bounds); // map should be your map class
     this.previousSelectedItem = item
-    this.moveTo(0.15)
-  }
-  moveTo(breakpoint: number) {
-    const { nativeElement } = this.modal;
+    const { nativeElement } = this.sheetElement;
     if (!nativeElement) {
       return;
     }
-    nativeElement.setCurrentBreakpoint(breakpoint);
+    nativeElement.setCurrentBreakpoint(0.15);
   }
+
 }
