@@ -69,9 +69,9 @@ export class MapPage implements OnInit {
     const { Map } = (await google.maps.importLibrary('maps')) as google.maps.MapsLibrary;
 
     this.map = new Map(document.getElementById('map'), {
-      center: { lat: 39.066, lng: -76.511 },
+      center: { lat: 42.5, lng: -97.8 },
       streetViewControl: false,
-      zoom: 12,
+      zoom: 4,
       mapId: 'DEMO_MAP_ID',
     });
     this.map.addListener('MapInitialized', this.onMapInitialized())
