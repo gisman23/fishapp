@@ -71,6 +71,7 @@ export class MapPage implements OnInit {
     this.map = new Map(document.getElementById('map'), {
       center: { lat: 42.5, lng: -97.8 },
       streetViewControl: false,
+      fullscreenControl: false,
       zoom: 3,
       mapId: 'DEMO_MAP_ID',
     });
@@ -172,6 +173,11 @@ export class MapPage implements OnInit {
   async getFishermen() {
     await this.dataService.getFishermen()
     this.fishermen = this.dataService.fishermen().sort()
+  }
+
+  resetMap (){
+    this.map.setZoom(3);
+    this.map.setCenter({ lat: 42.5, lng: -97.8 })
   }
 
   public currentSelected: Number = null;
