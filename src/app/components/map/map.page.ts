@@ -8,7 +8,7 @@ import { CatchInfo } from 'src/app/models/catchInfo.model';
 import { ModalController } from '@ionic/angular/standalone';
 import { FilterComponent } from '../filter/filter.component';
 import { addIcons } from 'ionicons';
-import { options, removeOutline } from 'ionicons/icons';
+import { options, removeOutline, globe } from 'ionicons/icons';
 import { BoundingBox } from 'src/app/models/boundingBox';
 import Multimap from 'multimap';
 
@@ -49,7 +49,7 @@ export class MapPage implements OnInit {
   log_modal: any;
 
   constructor() {
-    addIcons({ options, removeOutline });
+    addIcons({ options, removeOutline, globe });
     this.getSpecies()
     this.getFishermen()
   }
