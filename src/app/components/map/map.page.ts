@@ -1,6 +1,6 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, OnInit, signal, computed, ViewChild, ElementRef} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {IonGrid, IonRow,  IonToolbar, IonTitle, IonContent, IonCard, IonCardHeader } from '@ionic/angular/standalone';
+import {IonGrid, IonRow,  IonToolbar, IonTitle, IonContent, IonCard, IonCardHeader, IonFab, IonFabButton } from '@ionic/angular/standalone';
 import { DataBaseService } from 'src/app/services/Database.service';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { MarkerClusterer } from '@googlemaps/markerclusterer';
@@ -17,7 +17,7 @@ import Multimap from 'multimap';
   selector: 'app-map',
   templateUrl: 'map.page.html',
   styleUrls: ['map.page.scss'],
-  imports: [IonGrid, IonRow,   IonToolbar, IonTitle, IonContent, 
+  imports: [IonGrid, IonRow,   IonToolbar, IonTitle, IonContent, IonFab, IonFabButton,
     IonCard, IonCardHeader, IonContent, GoogleMapsModule, CommonModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
