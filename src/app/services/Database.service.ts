@@ -1,13 +1,10 @@
-import { Injectable, inject, signal } from '@angular/core';
+import { Injectable, inject, signal, computed } from '@angular/core';
 import { CatchInfo } from '../models/catchInfo.model';
 import { Firestore, collection, getDocs } from '@angular/fire/firestore';
 import { FirebaseConfig } from '../firebaseConfig';
 import { initializeApp } from "firebase/app";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 import { BodyOfWater } from '../models/bodyOfWater.model';
-import { getStorage, ref, getDownloadURL } from "firebase/storage";
-import { __values } from 'tslib';
-
 
 @Injectable({
     providedIn: 'root',
@@ -16,6 +13,13 @@ export class DataBaseService {
     firestore = inject(Firestore);
     firebaseConfig = FirebaseConfig;
     catches = signal<CatchInfo[]>([])
+    filteredItems = computed(() => {
+        /* Unique CatchDate's */
+        return this.catches().filter((obj, index, self) => {
+          return index === self.findIndex(o => o["CatchDate"] === obj["CatchDate"]);
+        }).sort((a, b) => b.CatchDate.localeCompare(a.CatchDate))
+      });
+
     waters = signal<BodyOfWater[]>([])
     fishermen = signal([])
     species = signal([])
@@ -23,7 +27,12 @@ export class DataBaseService {
 
     constructor() {
         this.db = getFirestore(initializeApp(this.firebaseConfig));
-        this.getBodyOfWater()
+        this.getFishEvents()
+        this.getFishermen()
+        this.getSpecies()
+
+
+     //   this.getBodyOfWater()
     }
 
     async getFishermen() {
@@ -66,6 +75,12 @@ export class DataBaseService {
             })
         )
     };
+
+    async getSelectedFishermen(fishermen: string) {
+        const catches = this.catches()
+        const results = catches.filter(((item) => item.Fishermen == fishermen))
+        console.log(results)
+    }
 }
 
 

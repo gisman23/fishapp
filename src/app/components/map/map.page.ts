@@ -1,6 +1,6 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, OnInit, signal, computed, ViewChild, ElementRef} from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, OnInit, signal, ViewChild, ElementRef} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {IonGrid, IonRow,  IonToolbar, IonTitle, IonContent, IonCard, IonCardHeader, IonFab, IonFabButton } from '@ionic/angular/standalone';
+import { IonGrid, IonRow,  IonToolbar, IonTitle, IonContent, IonCard, IonCardHeader, IonFab, IonFabButton } from '@ionic/angular/standalone';
 import { DataBaseService } from 'src/app/services/Database.service';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { MarkerClusterer } from '@googlemaps/markerclusterer';
@@ -28,17 +28,6 @@ export class MapPage implements OnInit {
   modalCtrl = inject(ModalController)
 
   boundingBox = signal<BoundingBox>({ "minLat": 0, "maxLat": 0, "minLng": 0, "maxLng": 0 });
-  filteredItems = computed(() => {
-    /* Unique CatchDate's */
-    return this.dataService.catches().filter((obj, index, self) => {
-      return index === self.findIndex(o => o["CatchDate"] === obj["CatchDate"]);
-    }).sort((a, b) => b.CatchDate.localeCompare(a.CatchDate))
-  });
-
-  catches: CatchInfo[]
-
-  species: any
-  fishermen: any
 
   map: any;
   markers: google.maps.marker.AdvancedMarkerElement[] = []
@@ -50,22 +39,16 @@ export class MapPage implements OnInit {
 
   constructor() {
     addIcons({ options, removeOutline, globe });
-    this.getSpecies()
-    this.getFishermen()
   }
 
   ngOnInit(): void {
     this.createMap();
   }
 
-  async onMapInitialized() {
-    await this.dataService.getFishermen()
-    this.DisplayCatches(this.dataService.catches())
-  }
-
   async createMap() {
     await this.dataService.getFishEvents()
-    this.catches = this.dataService.catches()
+//    this.catches = this.dataService.catches()
+
     const { Map } = (await google.maps.importLibrary('maps')) as google.maps.MapsLibrary;
 
     this.map = new Map(document.getElementById('map'), {
@@ -75,7 +58,6 @@ export class MapPage implements OnInit {
       zoom: 3,
       mapId: 'DEMO_MAP_ID',
     });
-    this.map.addListener('MapInitialized', this.onMapInitialized())
     this.map.addListener('bounds_changed', () => {
       const bounds = this.map.getBounds()
       if (bounds) {
@@ -87,6 +69,7 @@ export class MapPage implements OnInit {
         })
       }
     });
+    this.DisplayCatches(this.dataService.catches())
   }
 
   public async DisplayCatches(catches: CatchInfo[]) {
@@ -162,17 +145,6 @@ export class MapPage implements OnInit {
       component: FilterComponent,
     });
     modal.present();
-  }
-
-
-  async getSpecies() {
-    await this.dataService.getSpecies()
-    this.species = this.dataService.species().sort()
-  }
-
-  async getFishermen() {
-    await this.dataService.getFishermen()
-    this.fishermen = this.dataService.fishermen().sort()
   }
 
   resetMap (){

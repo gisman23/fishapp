@@ -4,9 +4,6 @@
       <ion-icon  slot="icon-only" name="options"></ion-icon>
     </ion-button>
 </ion-toolbar>
-<!--ion-toolbar color="light">
-  <ion-searchbar ></ion-searchbar>
-</ion-toolbar-->
 
 <ion-content fixed-slot-placement="before">
 <ion-fab horizontal="center" vertical="bottom" slot="fixed">
@@ -20,7 +17,7 @@
       <ion-grid  >
         <div style="overflow-y: scroll">     
         <ion-row>
-          <ion-col size="12" size-xs="12" size-sm="6" size-md="4" size-lg="3" *ngFor="let item of this.filteredItems(); index as i"        
+          <ion-col size="12" size-xs="12" size-sm="6" size-md="4" size-lg="3" *ngFor="let item of this.dataService.filteredItems(); index as i"        
           [ngStyle]="{'background':  i === currentSelected ? 'Red' :  null}"  (click)="selectDate(i, item)" >
             <ion-card>
               <ion-card-header>

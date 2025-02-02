@@ -2,7 +2,7 @@ import { Component, inject, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   IonList, IonItem, IonLabel, IonTitle,
-  IonHeader, IonContent, IonCheckbox
+  IonHeader, IonContent, IonCheckbox, IonDatetime
 } from '@ionic/angular/standalone';
 import { DataBaseService } from 'src/app/services/Database.service';
 import { ModalController } from '@ionic/angular/standalone';
@@ -16,7 +16,7 @@ import { options } from 'ionicons/icons';
   styleUrls: ['filter.component.css'],
   standalone: true,
   imports: [IonHeader, IonTitle, IonLabel, IonCheckbox,
-    IonItem, IonList, CommonModule, IonContent],
+    IonItem, IonList, CommonModule, IonContent,IonDatetime],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class FilterComponent {
@@ -50,5 +50,6 @@ export class FilterComponent {
   getValue(event:any)
   {
     console.log(event)
+    this.dataService.getSelectedFishermen(event)
   }
 }
