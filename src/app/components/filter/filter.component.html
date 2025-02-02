@@ -1,31 +1,31 @@
 <ion-header>
   <ion-toolbar color="secondary">
-      <ion-button slot = "end" (click)="dismiss()">
-        <ion-icon slot="icon-only" name="options"></ion-icon>
-      </ion-button>
+    <ion-button slot="end" (click)="dismiss()">
+      <ion-icon slot="icon-only" name="options"></ion-icon>
+    </ion-button>
     <ion-title>Fishing Event Filters</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-grid style="max-height:130px">
   <ion-row>
-   <ion-col>
-    <ion-datetime presentation="month-year" mode="ios" ></ion-datetime>
- </ion-col>
- <ion-col>
-      <ion-datetime presentation="month-year" mode="ios"></ion-datetime>
+    <ion-col>
+      <ion-datetime presentation="month-year"></ion-datetime>
+    </ion-col>
+    <ion-col>
+      <ion-datetime presentation="month-year"></ion-datetime>
     </ion-col>
   </ion-row>
-  </ion-grid>
+</ion-grid>
 
 
-  <ion-content style="overflow:scrolly"  style="margin-top: 0px;" style="max-height:230px">
-  <ion-list >
-    <ion-item  color="light">
+<ion-content style="overflow:scrolly" style="margin-top: 0px;" style="max-height:230px">
+  <ion-list>
+    <ion-item color="light">
       <ion-label>Fishermen</ion-label>
     </ion-item>
     <ion-item *ngFor="let person of fishermen">
-      <ion-checkbox justify="start" label-placement="end" (click) = "getValue(person)">{{person}}</ion-checkbox>
+      <ion-checkbox justify="start" label-placement="end" (click)="getValue(person)">{{person}}</ion-checkbox>
     </ion-item>
   </ion-list>
 </ion-content>
@@ -35,7 +35,7 @@
   <ion-list>
     <ion-item color="light">
       <ion-label>Species</ion-label>
-    </ion-item> 
+    </ion-item>
     <ion-item *ngFor="let fish of species">
       <ion-checkbox justify="start" label-placement="end">{{fish}}</ion-checkbox>
     </ion-item>
