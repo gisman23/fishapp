@@ -1,6 +1,6 @@
 .fish {
     height: 150px
 }
-.ion-datetime {
-    width:50%
+.ion-no-padding {
+    padding: 0;
 }
