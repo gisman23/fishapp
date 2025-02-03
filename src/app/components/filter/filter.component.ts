@@ -2,7 +2,7 @@ import { Component, inject, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   IonList, IonItem, IonLabel, IonTitle,
-  IonHeader, IonContent, IonCheckbox, IonDatetime
+  IonHeader, IonContent, IonCheckbox, IonButton
 } from '@ionic/angular/standalone';
 import { DataBaseService } from 'src/app/services/Database.service';
 import { ModalController } from '@ionic/angular/standalone';
@@ -16,7 +16,7 @@ import { options } from 'ionicons/icons';
   styleUrls: ['filter.component.css'],
   standalone: true,
   imports: [IonHeader, IonTitle, IonLabel, IonCheckbox,
-    IonItem, IonList, CommonModule, IonContent,IonDatetime],
+    IonItem, IonList, CommonModule, IonContent,IonButton],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class FilterComponent {
