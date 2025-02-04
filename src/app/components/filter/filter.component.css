@@ -4,3 +4,6 @@
 .ion-no-padding {
     padding: 0;
 }
+.ion-grid {
+    height: 40px;
+}

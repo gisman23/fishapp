@@ -1,7 +1,7 @@
 import { Component, inject, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
-  IonList, IonItem, IonLabel, IonTitle,
+  IonList, IonItem, IonLabel, IonTitle, IonGrid,
   IonHeader, IonContent, IonCheckbox, IonButton
 } from '@ionic/angular/standalone';
 import { DataBaseService } from 'src/app/services/Database.service';
@@ -15,7 +15,7 @@ import { options } from 'ionicons/icons';
   templateUrl: 'filter.component.html',
   styleUrls: ['filter.component.css'],
   standalone: true,
-  imports: [IonHeader, IonTitle, IonLabel, IonCheckbox,
+  imports: [IonHeader, IonTitle, IonLabel, IonCheckbox, IonGrid,
     IonItem, IonList, CommonModule, IonContent,IonButton],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
