@@ -16,7 +16,7 @@ import { options } from 'ionicons/icons';
   styleUrls: ['filter.component.css'],
   standalone: true,
   imports: [IonHeader, IonTitle, IonLabel, IonCheckbox, IonGrid,
-    IonItem, IonList, CommonModule, IonContent,IonButton],
+    IonItem, IonList, CommonModule, IonContent, IonButton],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class FilterComponent {
@@ -25,10 +25,14 @@ export class FilterComponent {
 
   species: any
   fishermen: any
+  fishermenFilter = [];
+  speciesFilter = [];
+  yearFilter = [];
+  yearBtn = ["outline", "outline", "outline", "outline"]
 
 
   constructor() {
-    addIcons({ options});
+    addIcons({ options });
     this.getSpecies()
     this.getFishermen()
   }
@@ -47,9 +51,41 @@ export class FilterComponent {
     this.viewCtrl.dismiss();
   }
 
-  getValue(event:any)
-  {
-    console.log(event)
-    this.dataService.getSelectedFishermen(event)
+  getSelectedFishermen(item: string) {
+    if (this.fishermenFilter.includes(item)) {
+      this.fishermenFilter = this.fishermenFilter.filter((value) => value != item);
+
+    } else {
+      this.fishermenFilter.push(item)
+    }
+    console.log(this.fishermenFilter)
   }
+
+  getSelectedSpecies(item: string) {
+    if (this.speciesFilter.includes(item)) {
+      this.speciesFilter = this.speciesFilter.filter((value) => value != item);
+
+    } else {
+      this.speciesFilter.push(item)
+    }
+    console.log(this.speciesFilter)
+  }
+
+  filterDate(index: number, year: string) {
+    if (this.yearBtn[index] == "outline") {
+      this.yearBtn[index] = "solid"
+    }
+    else {
+      this.yearBtn[index] = "outline"
+    }
+
+    if (this.yearFilter.includes(year)) {
+      this.yearFilter = this.yearFilter.filter((value) => value != year);
+
+    } else {
+      this.yearFilter.push(year)
+    }
+    console.log(this.yearFilter)
+  }
+
 }
